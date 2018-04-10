@@ -1,2 +1,2 @@
 # MailCart
-A web-mail system
+A webmail system with three level password authentication.
