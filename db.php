@@ -112,7 +112,70 @@ if($_POST['action'] == 'checkLevel3') {
 	echo json_encode($all_rows);
 	mysqli_close($db);
 }
-
+if($_POST['action'] == 'load') {
+	require_once('connection.php');
+	
+	session_start();
+	$currentUser = $_SESSION['user'];
+	$query = "select * from inbox where to_id = '$currentUser' and trash = 0";
+	$res = mysqli_query($db, $query);
+	if($res === false)
+		die("Query $query returned false!");
+	$all_rows = array();
+	while($row = mysqli_fetch_array($res, MYSQLI_ASSOC))
+		$all_rows[] = $row;
+	header("Content-type:application/json");
+	echo json_encode($all_rows);
+	mysqli_close($db);
+}
+if($_POST['action'] == 'sentMails') {
+	require_once('connection.php');
+	
+	session_start();
+	$currentUser = $_SESSION['user'];
+	$query = "select * from inbox where from_id = '$currentUser' and draft = 0";
+	$res = mysqli_query($db, $query);
+	if($res === false)
+		die("Query $query returned false!");
+	$all_rows = array();
+	while($row = mysqli_fetch_array($res, MYSQLI_ASSOC))
+		$all_rows[] = $row;
+	header("Content-type:application/json");
+	echo json_encode($all_rows);
+	mysqli_close($db);
+}
+if($_POST['action'] == 'drafts') {
+	require_once('connection.php');
+	
+	session_start();
+	$currentUser = $_SESSION['user'];
+	$query = "select * from inbox where from_id = '$currentUser' and draft = 1";
+	$res = mysqli_query($db, $query);
+	if($res === false)
+		die("Query $query returned false!");
+	$all_rows = array();
+	while($row = mysqli_fetch_array($res, MYSQLI_ASSOC))
+		$all_rows[] = $row;
+	header("Content-type:application/json");
+	echo json_encode($all_rows);
+	mysqli_close($db);
+}
+if($_POST['action'] == 'trash') {
+	require_once('connection.php');
+	
+	session_start();
+	$currentUser = $_SESSION['user'];
+	$query = "select * from inbox where to_id = '$currentUser' and trash = 1";
+	$res = mysqli_query($db, $query);
+	if($res === false)
+		die("Query $query returned false!");
+	$all_rows = array();
+	while($row = mysqli_fetch_array($res, MYSQLI_ASSOC))
+		$all_rows[] = $row;
+	header("Content-type:application/json");
+	echo json_encode($all_rows);
+	mysqli_close($db);
+}
 
 ?>
 	
