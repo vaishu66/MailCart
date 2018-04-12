@@ -177,5 +177,17 @@ if($_POST['action'] == 'trash') {
 	mysqli_close($db);
 }
 
+if($_POST['action'] == 'getMessage') {
+	require_once('connection.php');
+	$id = $_POST['id'];
+	$query = "select * from inbox where id = '$id'";
+	$res = mysqli_query($db, $query);
+	if($res === false)
+		die("Query $query returned false!");
+	$row = mysqli_fetch_row($res);
+	header("Content-type:application/json");
+	echo json_encode($row);
+	mysqli_close($db);
+}
 ?>
 	
