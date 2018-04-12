@@ -56,6 +56,65 @@ function addLevel3(){
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send("action=" + action + "&currentUser=" + currentUser +"&string=" + generatedString);
 	generatedString = "";
+	
+}
+function checkLogin(){
+	var email = document.getElementById("login-username").value;
+	var passwd = document.getElementById("login-password").value;
+	var action = 'checkLogin';
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("POST", "db.php", false);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send("action=" + action + "&email=" + email + "&passwd=" + passwd);
+	response = JSON.parse(xhttp.responseText);
+	if(response.length == 0) {
+		document.getElementById('lerr').innerHTML = "Invalid username or password";
+		document.getElementById('signupalert').style.display = "block";
+		return;
+	}
+	currentUser = email;
+	action = 'getQuestion';
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("POST", "db.php", false);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send("action=" + action + "&currentUser=" + currentUser);
+	response = JSON.parse(xhttp.responseText);
+	
+	$("#loginbox").hide();
+	$("#level2login").show();
+	document.getElementById("questionCheck").value = response[0];
+}
+function checkLevel2(){
+	var answer = document.getElementById("answer").value;	
+	var action = 'checkLevel2';
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("POST", "db.php", false);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send("action=" + action + "&currentUser=" + currentUser + "&answer=" + answer);
+	response = JSON.parse(xhttp.responseText);
+	if(response.length == 0) {
+		document.getElementById('l2err').innerHTML = "Enter correct answer";
+		document.getElementById('level2alert').style.display = "block";
+		return;
+	}
+	$("#level2login").hide();
+	$("#level3login").show();
+}
+function checkLevel3(){
+	var action = 'checkLevel3';
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("POST", "db.php", false);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send("action=" + action + "&currentUser=" + currentUser +"&string=" + generatedString);
+	console.log(xhttp.responseText);
+	response = JSON.parse(xhttp.responseText);
+	
+	if(response.length == 0) {
+		document.getElementById('l3err').innerHTML = "Enter correct color pattern";
+		document.getElementById('level3alert').style.display = "block";
+		return;
+	}
+	generatedString = "";
 }
 var generatedString = "";
 function generateString(string){
@@ -96,4 +155,3 @@ function errorHandler(email, fname, lname, gender, alt_email) {
 function setUser(){
 	document.getElementById('curr_user').innerHTML = user;
 }
-
