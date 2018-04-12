@@ -8,20 +8,67 @@ function getResponse(action) {
 	generateTable(response);
 }
 function inbox(){
+	document.getElementById('heading').innerHTML = "Inbox";
+	document.getElementById('sentMail').style.background = 'none';
+	document.getElementById('draft').style.background = 'none';
+	document.getElementById('archive').style.background = 'none';
+	document.getElementById('trash').style.background = 'none';
+	document.getElementById('inbox').style.background = '#d5d7de';
+	$('#rel').show()
 	var action = "load";
 	getResponse(action);	
 }
 function sentMails(){
+	document.getElementById('heading').innerHTML = "Sent";
+	document.getElementById('inbox').style.background = 'none';
+	document.getElementById('sentMail').style.background = '#d5d7de';
+	document.getElementById('draft').style.background = 'none';
+	document.getElementById('archive').style.background = 'none';
+	document.getElementById('trash').style.background = 'none';
+	$('#rel').hide()
 	var action = "sentMails";
 	getResponse(action);
 }
 function drafts(){
+	document.getElementById('heading').innerHTML = "Drafts";
+	document.getElementById('inbox').style.background = 'none';
+	document.getElementById('sentMail').style.background = 'none';
+	document.getElementById('trash').style.background = 'none';
+	document.getElementById('archive').style.background = 'none';
+	document.getElementById('draft').style.background = '#d5d7de';
+	$('#rel').hide()
 	var action = "drafts";
 	getResponse(action);
 }
 function trash(){
+	document.getElementById('heading').innerHTML = "Trash";
+	document.getElementById('inbox').style.background = 'none';
+	document.getElementById('sentMail').style.background = 'none';
+	document.getElementById('draft').style.background = 'none';
+	document.getElementById('archive').style.background = 'none';
+	document.getElementById('trash').style.background = '#d5d7de';
 	var action = "trash";
+	$('#rel').hide()
 	getResponse(action);
+}
+function getMessage(t){
+	var action= "getMessage";
+	var l = t.rowIndex + 1;
+	var id = document.getElementById('hide' + l).value;
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("POST", "db.php", false);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send("action=" + action + "&id=" + id);
+	response = JSON.parse(xhttp.responseText);
+	document.getElementById('subLabel').innerHTML = response[3];
+	document.getElementById('from').innerHTML = response[2];
+	document.forms['area']['msg'].value = response[4];
+}
+function unset(){
+	document.getElementById("inputEmail1").value = "";
+	document.getElementById("subject").value = "";
+	document.getElementById("bcc").value = "";
+	document.forms['compose']['msg'].value = "";
 }
 function generateTable(response){
 	var today = new Date();
@@ -31,7 +78,7 @@ function generateTable(response){
 	var currDate = today.getFullYear() + "-" + month + "-" + today.getDate();
 	$('#table').html("");
 	$('#table').append('<tbody>');
-	$('#table').append('<tr data-toggle="modal"  data-target="#" id="row1"></tr>');
+	$('#table').append('<tr data-toggle="modal"  data-target="#myModal1" onclick="getMessage(this)" id="row1"></tr>');
 	i = 1;	
 	for(j in response){
 		var hid =  response[j].id;
@@ -45,10 +92,10 @@ function generateTable(response){
 			$('#row'+i).append("<td class='view-message  inbox-small-cells'></td><td class='view-message  text-right'>" + response[j].rec_time + "</td>");		
 		else 
 			$('#row'+i).append("<td class='view-message  inbox-small-cells'></td><td class='view-message  text-right'>" + response[j].rec_date + "</td>");
-	      $('#table').append('<tr data-toggle="modal"  data-target="#myModal1" id="row'+(i+1)+'"></tr>');
+	      $('#table').append('<tr data-toggle="modal"  data-target="#myModal1" onclick="getMessage(this)" id="row'+(i+1)+'"></tr>');
+	console.log(i);	      
 	i++;
       }
 	
 	$('#table').append('</tbody>');
 }
-
