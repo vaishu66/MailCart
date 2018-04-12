@@ -4,10 +4,11 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="main.js"></script>
 
 <link rel = "stylesheet" type = "text/css" href = "main.css">
 </head>
-<body>
+<body onload = "inbox();">
 <div class="container">
 <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
  <div class="mail-box">
@@ -64,7 +65,12 @@
 
                                               <div class="form-group">
                                                   <div class="col-lg-offset-2 col-lg-10">
-                                                      <button class="btn" type="submit" >Send</button>
+                                                      <span class="btn green fileinput-button">
+                                                        <i class="fa fa-plus fa fa-white"></i>
+                                                        <!--<span>Attachment</span>
+                                                       <!-- <input type="file" id="attach" name="files[]" multiple="">
+                                                      </span>-->
+                                                      <button class="btn" type="submit" onclick="send()">Send</button>
                                                   </div>
                                               </div>
                                           </form>
@@ -75,19 +81,19 @@
                       </div>
                       <ul class="inbox-nav inbox-divider">
                           <li>
-                              <a href="#" id="inbox"><i class="fa fa-inbox"></i> Inbox <span class="label label-danger pull-right">2</span></a>
+                              <a href="javascript:inbox();" id="inbox"><i class="fa fa-inbox"></i> Inbox <span class="label label-danger pull-right">2</span></a>
                           </li>
                           <li>
-                              <a href="#" id = "sentMail"><i class="fa fa-envelope-o"></i> Sent Mail</a>
+                              <a href="javascript:sentMails();" id = "sentMail"><i class="fa fa-envelope-o"></i> Sent Mail</a>
                           </li>
                           <li>
                               <a href="#"><i class="fa fa-bookmark-o" id = "archive"></i> Important</a>
                           </li>
                           <li>
-                              <a href="#" id = "draft"><i class=" fa fa-external-link"></i> Drafts <span class="label label-info pull-right">30</span></a>
+                              <a href="javascript:drafts();" id = "draft"><i class=" fa fa-external-link"></i> Drafts <span class="label label-info pull-right">30</span></a>
                           </li>
                           <li>
-                              <a href="#" id = "trash"><i class=" fa fa-trash-o"></i> Trash</a>
+                              <a href="javascript:trash();" id = "trash"><i class=" fa fa-trash-o"></i> Trash</a>
                           </li>
                       </ul>
                       <ul class="nav nav-pills nav-stacked labels-info inbox-divider">
@@ -186,7 +192,7 @@
                          </div>
                           <table id = "table" class="table table-inbox table-hover">
                           </table>
-                      </div>
+			</div>
                   </aside>
               </div>
 </div>
