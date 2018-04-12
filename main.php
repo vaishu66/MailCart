@@ -25,7 +25,7 @@
                           
                       </div>
                       <div class="inbox-body">
-                          <a href="#myModal" data-toggle="modal" title="Compose" class="btn btn-compose">
+                          <a href="#myModal" data-toggle="modal" onclick="unset()" title="Compose" class="btn btn-compose">
                               Compose
                           </a> 
                           <!-- Modal -->
@@ -67,10 +67,7 @@
                                                   <div class="col-lg-offset-2 col-lg-10">
                                                       <span class="btn green fileinput-button">
                                                         <i class="fa fa-plus fa fa-white"></i>
-                                                        <!--<span>Attachment</span>
-                                                       <!-- <input type="file" id="attach" name="files[]" multiple="">
-                                                      </span>-->
-                                                      <button class="btn" type="submit" onclick="send()">Send</button>
+                                                      <button class="btn" type="submit">Send</button>
                                                   </div>
                                               </div>
                                           </form>
@@ -192,7 +189,31 @@
                          </div>
                           <table id = "table" class="table table-inbox table-hover">
                           </table>
-			</div>
+				<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal1" class="modal fade">
+                              <div class="modal-dialog">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                                          <h4 class="modal-title" id="subLabel">Subject</h4>
+                                      </div>
+                                      <div class="modal-body">
+                                          <form role="form" name="area" class="form-horizontal">
+                                              <div class="form-group">
+                                                  <label class="col-lg-2 control-label">From</label>
+                                                  <div id="from" class="col-lg-10"></div>
+                                              </div>
+                                                  <div class="form-group">
+                                                  <label class="col-lg-2 control-label">Message</label>
+                                                  <div class="col-lg-10">
+                                                      <textarea rows="10" cols="30" onclick="this.focus();this.select()" class="form-control" id="body" name="msg" readonly></textarea>
+                                                  </div>
+                                              </div>						
+                                          </form>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div><!-- /.modal -->
+                      </div>
                   </aside>
               </div>
 </div>
