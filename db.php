@@ -47,6 +47,72 @@ if($_POST['action'] == 'addLevel3') {
 	if($res === false)
 		die("Query $query returned false!");
 }
+if($_POST['action'] == 'checkLogin') {
+	require_once('connection.php');
+	session_start();
+	$email = $_POST['email'];
+	$passwd = $_POST['passwd'];
+	$qry = "select name from registerUser where email_id = '$email'";
+	$result = mysqli_query($db, $qry);
+	if($result === false)
+		die("Query $qry returned false!");
+	$row1 = mysqli_fetch_row($result);
+	$_SESSION['user_name'] = $row1[0];
+	$query = "select * from user where email_id = '$email' and password = '$passwd'";
+	$res = mysqli_query($db, $query);
+	if($res === false)
+		die("Query $query returned false!");
+	$_SESSION['user'] = $email;
+	$all_rows = array();
+	while($row = mysqli_fetch_array($res, MYSQLI_ASSOC))
+		$all_rows[] = $row;
+	header("Content-type:application/json");
+	echo json_encode($all_rows);
+	mysqli_close($db);
+}
+if($_POST['action'] == 'getQuestion'){
+	require_once('connection.php');
+	$currentUser = $_POST['currentUser'];
+	$query = "select question from level2 where email_id = '$currentUser'";
+	$res = mysqli_query($db, $query);
+	if($res === false)
+		die("Query $query returned false!");
+	$row = mysqli_fetch_row($res);
+	header("Content-type:application/json");
+	echo json_encode($row);
+	mysqli_close($db);
+}
+if($_POST['action'] == 'checkLevel2') {
+	require_once('connection.php');
+	$currentUser = $_POST['currentUser'];
+	$answer = $_POST['answer'];
+	$query = "select * from level2 where email_id = '$currentUser' and answer = '$answer'";
+	$res = mysqli_query($db, $query);
+	if($res === false)
+		die("Query $query returned false!");
+	$all_rows = array();
+	while($row = mysqli_fetch_array($res, MYSQLI_ASSOC))
+		$all_rows[] = $row;
+	header("Content-type:application/json");
+	echo json_encode($all_rows);
+	mysqli_close($db);
+}
+if($_POST['action'] == 'checkLevel3') {
+	require_once('connection.php');
+	$currentUser = $_POST['currentUser'];
+	$string = $_POST['string'];
+	$query = "select * from level3 where email_id = '$currentUser' and color_pattern = '$string";
+	$res = mysqli_query($db, $query);
+	if($res === false)
+		die("Query $query returned false!");
+	$all_rows = array();
+	while($row = mysqli_fetch_array($res, MYSQLI_ASSOC))
+		$all_rows[] = $row;
+	header("Content-type:application/json");
+	echo json_encode($all_rows);
+	mysqli_close($db);
+}
+
 
 ?>
 	
