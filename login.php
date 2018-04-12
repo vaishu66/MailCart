@@ -51,7 +51,7 @@
                                     <!-- Button -->
 
                                     <div class="col-sm-12 controls">
-                                      <button id="btn-login" type="button" class="btn btn-info" onClick="$('#loginbox').hide();$('#level2Login').show"> &nbsp Next</button>
+                                      <button id="btn-login" type="button" class="btn btn-info" onClick="checkLogin()"> &nbsp Next</button>
 				      
                                     </div>
                                 </div>
@@ -96,9 +96,9 @@
 
                                 <div style="margin-top:10px" class="form-group">
 				    <div class="col-md-offset-3 col-md-9">
-                                        <button id="btn-level2" type="button" class="btn btn-info" onClick="$('#level2Login').hide();$('#level3Login').show">&nbsp Next</button>
+                                        <button id="btn-level2" type="button" class="btn btn-info" onClick="checkLevel2()">&nbsp Next</button>
                                     </div>
-                                </div> 
+                                </div>
 
   
                             </form>     
@@ -139,7 +139,7 @@
 
                                 <div style="margin-top:10px" class="form-group">
 				   <div class="col-md-offset-3 col-md-9">
-                                        <button id="btn-level3" type="button" class="btn btn-info" onClick="document.location.href = #"><i class="icon-hand-right"></i> &nbsp Next</button>
+                                        <button id="btn-level3" type="button" class="btn btn-info" onClick="document.location.href =# ;checkLevel3()"><i class="icon-hand-right"></i> &nbsp Next</button>
                                     </div>
                                 </div>
 
@@ -283,7 +283,7 @@
 
                         <div style="display:none" id="level3-alert" class="alert alert-danger col-sm-12"></div>
                             
-                        <form id="level3form" class="form-horizontal" role="form" action="try.php">
+                        <form id="level3form" class="form-horizontal" role="form">
                                     
                             <div style="margin-bottom: 25px" class="input-group">
 				<button id="" type="button" class="btn btn-primary btn-lg" onclick="generateString('00')">       </button>
@@ -291,6 +291,7 @@
   				<button id="" type="button" class="btn btn-warning btn-lg" onclick="generateString('10')">        </button>
   				<button id="" type="button" class="btn btn-danger btn-lg" onclick="generateString('11')">         </button>
                              </div>
+			
                              <div class="input-group">
                                       <div class="checkbox">
                                         <label>
@@ -301,8 +302,14 @@
 
 
                                 <div style="margin-top:10px" class="form-group">
+                                    <!-- Button 
+
+                                    <div class="col-sm-12 controls">
+                                      
+					<a id="btn-login" href="#" class="btn btn-success">Login </a>
+                                    </div> -->
 				   <div class="col-md-offset-3 col-md-9">
-                                        <button id="btn-level3" type="button" class="btn btn-info" onClick="document.location.href = # ;addLevel3()"><i class="icon-hand-right"></i> &nbsp Next</button>
+                                        <button id="btn-level3" type="button" class="btn btn-info" onClick="document.location.href = #;addLevel3()"><i class="icon-hand-right"></i> &nbsp Next</button>
                                     </div>
                                 </div>
 
