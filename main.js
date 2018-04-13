@@ -51,6 +51,31 @@ function trash(){
 	$('#rel').hide()
 	getResponse(action);
 }
+function send(){
+	var count;
+	var action = "send";
+	var to = document.getElementById("inputEmail1").value;
+	var multiple = to.split(",");
+	console.log(multiple[0]);
+	var bcc = document.getElementById("bcc").value;
+	var subject = document.getElementById("subject").value;
+	var body = document.getElementById("body").value;
+	//if( document.getElementById("attach").files.length == 0)
+		var attach = 0;
+	//else
+	//	var attach = 1;
+	if(to == "")
+		var draft = 1;
+	else
+		var draft = 0;
+	for(count = 0; count < multiple.length; count++){
+		var xhttp = new XMLHttpRequest();
+		xhttp.open("POST", "db.php", false);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send("action=" + action + "&to=" + multiple[count] + "&bcc=" + bcc + "&subject=" + subject + "&body=" + body + "&attach=" + attach + "&draft=" + draft);
+		
+	}
+}
 function getMessage(t){
 	var action= "getMessage";
 	var l = t.rowIndex + 1;
