@@ -76,6 +76,14 @@ function send(){
 		
 	}
 }
+function logout(){
+	var action = "logout";
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("POST", "db.php", false);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send("action=" + action);
+	
+}
 function getMessage(t){
 	var action= "getMessage";
 	var l = t.rowIndex + 1;
