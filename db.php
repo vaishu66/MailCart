@@ -22,11 +22,7 @@ if($_POST['action'] == 'adduser') {
 	$val = mysqli_query($db, $query);
 	if(!$val) 
 		die('Could not get data');
-	/*$all_rows = array();
-	while($row = mysqli_fetch_array($val, MYSQLI_ASSOC)) 
-		$all_rows[] = $row;*/
 	header("Content-type:application/json");
-	//echo json_encode($all_rows);
 	$resString = "{\"Success\": \"True\"}";
 	echo $resString;
 	mysqli_close($db);
@@ -188,6 +184,10 @@ if($_POST['action'] == 'logout') {
 if($_POST['action'] == 'getMessage') {
 	require_once('connection.php');
 	$id = $_POST['id'];
+	//$qry = "update table inbox set unread = 1 where id = '$id'";
+	//$result = mysqli_query($db, $qry);
+	//if($result === false)
+	//	die("Query $qry returned false!");
 	$query = "select * from inbox where id = '$id'";
 	$res = mysqli_query($db, $query);
 	if($res === false)
@@ -197,7 +197,7 @@ if($_POST['action'] == 'getMessage') {
 	echo json_encode($row);
 	mysqli_close($db);
 }
-if($_POST['action'] == 'send') {
+/*if($_POST['action'] == 'send') {
 	require_once('connection.php');
 	
 	session_start();
@@ -220,6 +220,146 @@ if($_POST['action'] == 'send') {
 		die("Query $query returned false!");
 	mysqli_close($db);
 
+}*/
+if($_POST['action'] == 'deleteMail') {
+	require_once('connection.php');
+	$id = $_POST['id'];
+	$query = "update inbox set trash = 1 where id = '$id'";
+	$res = mysqli_query($db, $query);
+	if($res === false)
+		die("Query $query returned false!");
 }
-?>
+if($_POST['action'] == 'getFile') {
+	require_once('connection.php');
+	$id = $_POST['id'];
+	$query = "select fileName from inbox where id = '$id'";
+	$res = mysqli_query($db, $query);
+	if($res === false)
+		die("Query $query returned false!");
+	$row = mysqli_fetch_row($res);
+	$filename = $row[0];
+	header("Location: login.php");	
+	/*$path = 'uploads/'.$filename;
 	
+	if (file_exists($path) && is_readable($path)) {
+	
+		$size = filesize($path);
+		header('Content-Type: application/octet-stream');
+		header('Content-Length: '.$size);
+		header('Content-Disposition: attachment; filename='.$filename);
+		header('Content-Transfer-Encoding: binary');
+		$file = @ fopen($path, 'rb');
+		if ($file)
+		fpassthru($file);
+		mysqli_close($db);
+	}*/
+}
+if($_POST['action'] == 'checkContact') {
+	require_once('connection.php');
+	session_start();
+	$id = $_POST['contact_id'];
+	$user_id = $_SESSION['user'];
+	$query = "select * from contacts where user_id = '$user_id' and contact_id = '$id'";
+	$res = mysqli_query($db, $query);
+	if($res === false)
+		die("Query $query returned false!");
+	$all_rows = array();
+	while($row = mysqli_fetch_array($res, MYSQLI_ASSOC))
+		$all_rows[] = $row;
+	header("Content-type:application/json");
+	echo json_encode($all_rows);
+	mysqli_close($db);
+}
+if($_POST['action'] == 'addContact') {
+	require_once('connection.php');
+	session_start();
+	$id = $_POST['contact_id'];
+	$user_id = $_SESSION['user'];
+	
+	$query = "insert into contacts(user_id, contact_id) values('$user_id', '$id')";
+	$res = mysqli_query($db, $query);
+	if($res === false)
+		die("Query $query returned false!");
+		mysqli_close($db);
+	
+}
+if($_POST['action'] == 'displayContacts') {
+	require_once('connection.php');
+	session_start();
+	$user_id = $_SESSION['user'];
+	$query = "select * from contacts where user_id = '$user_id'";
+	$res = mysqli_query($db, $query);
+	if($res === false)
+		die("Query $query returned false!");
+	
+	$all_rows = array();
+	while($row = mysqli_fetch_array($res, MYSQLI_ASSOC))
+		$all_rows[] = $row;
+	header("Content-type:application/json");
+	echo json_encode($all_rows);
+	mysqli_close($db);
+	
+}
+if($_POST['action'] == 'setId') {
+	require_once('connection.php');
+	$id = $_POST['id'];
+	$query = "select * from contacts where id = '$id'";
+	$res = mysqli_query($db, $query);
+	if($res === false)
+		die("Query $query returned false!");
+	$row = mysqli_fetch_row($res);
+	header("Content-type:application/json");
+	echo json_encode($row);
+	mysqli_close($db);
+}
+if($_POST['action'] == 'search_name') {
+	require_once('connection.php');
+
+	session_start();
+	$currentUser = $_SESSION['user'];
+	$val = $_POST['val'];
+	$type = $_POST['folder'];
+	if($type == 'inbox')
+		$query = "select * from inbox where to_id = '$currentUser' and from_name = '$val' and trash = 0";
+	else if($type == 'sent')
+		$query = "select * from inbox where from_id = '$currentUser' and from_name = '$val' and draft = 0";
+	else if($type == 'drafts')
+		$query = "select * from inbox where from_id = '$currentUser' and from_name = '$val' and draft = 1";
+	else if($type == 'trash')
+		$query = "select * from inbox where to_id = '$currentUser' and from_name = '$val' and trash = 1";
+	$res = mysqli_query($db, $query);
+	if($res === false)
+		die("Query $query returned false!");
+	$all_rows = array();
+	while($row = mysqli_fetch_array($res, MYSQLI_ASSOC))
+		$all_rows[] = $row;
+	header("Content-type:application/json");
+	echo json_encode($all_rows);
+	mysqli_close($db);
+}
+if($_POST['action'] == 'search_subject') {
+	require_once('connection.php');
+
+	session_start();
+	$currentUser = $_SESSION['user'];
+	$val = $_POST['val'];
+	$type = $_POST['folder'];
+	if($type == 'inbox')
+		$query = "select * from inbox where to_id = '$currentUser' and subject = '$val' and trash = 0";
+	else if($type == 'sent')
+		$query = "select * from inbox where from_id = '$currentUser' and subject = '$val' and draft = 0";
+	else if($type == 'drafts')
+		$query = "select * from inbox where from_id = '$currentUser' and subject = '$val' and draft = 1";
+	else if($type == 'trash')
+		$query = "select * from inbox where to_id = '$currentUser' and subject = '$val' and trash = 1";
+	$res = mysqli_query($db, $query);
+	if($res === false)
+		die("Query $type returned false!");
+	$all_rows = array();
+	while($row = mysqli_fetch_array($res, MYSQLI_ASSOC))
+		$all_rows[] = $row;
+	header("Content-type:application/json");
+	echo json_encode($all_rows);
+	mysqli_close($db);
+}
+?>	
