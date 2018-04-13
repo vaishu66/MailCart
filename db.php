@@ -176,7 +176,6 @@ if($_POST['action'] == 'trash') {
 	echo json_encode($all_rows);
 	mysqli_close($db);
 }
-
 if($_POST['action'] == 'getMessage') {
 	require_once('connection.php');
 	$id = $_POST['id'];
@@ -188,6 +187,30 @@ if($_POST['action'] == 'getMessage') {
 	header("Content-type:application/json");
 	echo json_encode($row);
 	mysqli_close($db);
+}
+if($_POST['action'] == 'send') {
+	require_once('connection.php');
+	
+	session_start();
+	$to = $_POST['to'];
+	$bcc = $_POST['bcc'];
+	$subject = $_POST['subject'];
+	$body = $_POST['body'];
+	$attach = $_POST['attach'];
+	$draft = $_POST['draft'];
+	$trash = 0;
+	$unread = 0;
+	$archive = 0;
+	$from = $_SESSION['user'];
+	$from_name = $_SESSION['user_name'];
+	$rec_date = date('Y-m-d');
+	$rec_time = date("H:i:s");
+	$query = "insert into inbox(to_id, from_id, subject, body, attach, trash, draft, archive, unread, from_name, rec_date, rec_time) values('$to', '$from', '$subject', '$body', $attach, $trash, $draft, $archive, $unread,'$from_name', '$rec_date', '$rec_time')";
+	$res = mysqli_query($db, $query);
+	if($res === false)
+		die("Query $query returned false!");
+	mysqli_close($db);
+
 }
 ?>
 	
