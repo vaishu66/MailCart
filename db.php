@@ -22,7 +22,11 @@ if($_POST['action'] == 'adduser') {
 	$val = mysqli_query($db, $query);
 	if(!$val) 
 		die('Could not get data');
+	/*$all_rows = array();
+	while($row = mysqli_fetch_array($val, MYSQLI_ASSOC)) 
+		$all_rows[] = $row;*/
 	header("Content-type:application/json");
+	//echo json_encode($all_rows);
 	$resString = "{\"Success\": \"True\"}";
 	echo $resString;
 	mysqli_close($db);
@@ -175,6 +179,11 @@ if($_POST['action'] == 'trash') {
 	header("Content-type:application/json");
 	echo json_encode($all_rows);
 	mysqli_close($db);
+}
+if($_POST['action'] == 'logout') {
+	unset($_SESSION);
+	session_destroy();
+	session_write_close();
 }
 if($_POST['action'] == 'getMessage') {
 	require_once('connection.php');
