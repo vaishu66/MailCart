@@ -103,6 +103,29 @@ function unset(){
 	document.getElementById("bcc").value = "";
 	document.forms['compose']['msg'].value = "";
 }
+function reply(){
+	document.getElementById("inputEmail1").value = "";
+	document.getElementById("subject").value = "";
+	document.forms['compose']['msg'].value = "";
+	document.getElementById("bcc").value = "";
+	var to = document.getElementById('from').innerHTML;	
+	var subject = document.getElementById('subLabel').innerHTML;
+	$('#myModal').modal('show');
+	document.getElementById("inputEmail1").value = to;
+	document.getElementById("subject").value = "Re:" + " " + subject;
+	
+}
+function forward(){
+	document.getElementById("inputEmail1").value = "";
+	document.getElementById("subject").value = "";
+	document.forms['compose']['msg'].value = "";
+	document.getElementById("bcc").value = "";
+	var message = document.forms['area']['msg'].value;	
+	var subject = document.getElementById('subLabel').innerHTML;
+	$('#myModal').modal('show');
+	document.forms['compose']['msg'].value = message;
+	document.getElementById("subject").value = subject;
+}
 function generateTable(response){
 	var today = new Date();
 	var month = today.getMonth() + 1;
