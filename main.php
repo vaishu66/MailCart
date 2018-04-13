@@ -4,7 +4,9 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="main.js"></script>
+  <script src="login.js"></script>
 
 <link rel = "stylesheet" type = "text/css" href = "main.css">
 </head>
@@ -38,23 +40,23 @@
                                           <h4 class="modal-title">Compose</h4>
                                       </div>
                                       <div class="modal-body">
-                                          <form role="form" name = "compose" method="POST" class="form-horizontal">
+                                          <form role="form"  class="form-horizontal">
                                               <div class="form-group">
                                                   <label class="col-lg-2 control-label">To</label>
                                                   <div class="col-lg-10">
-                                                      <input type="text" placeholder="" id="inputEmail1" class="form-control">
+                                                      <input type="text" name = "inputEmail1" placeholder="" id="inputEmail1" class="form-control">
                                                   </div>
                                               </div>
                                               <div class="form-group">
                                                   <label class="col-lg-2 control-label">Bcc</label>
                                                   <div class="col-lg-10">
-                                                      <input type="text" placeholder="" id="bcc" class="form-control">
+                                                      <input type="text" name = "bcc" placeholder="" id="bcc" class="form-control">
                                                   </div>
                                               </div>
                                               <div class="form-group">
                                                   <label class="col-lg-2 control-label">Subject</label>
                                                   <div class="col-lg-10">
-                                                      <input type="text" placeholder="" id="subject" class="form-control">
+                                                      <input type="text" name = "subject" placeholder="" id="subject" class="form-control">
                                                   </div>
                                               </div>
                                               <div class="form-group">
@@ -68,7 +70,10 @@
                                                   <div class="col-lg-offset-2 col-lg-10">
                                                       <span class="btn green fileinput-button">
                                                         <i class="fa fa-plus fa fa-white"></i>
-                                                      <button class="btn" type="submit" onclick="send()">Send</button>
+                                                        <span>Attachment</span>
+                                                       
+                                                      </span>
+                                                      <button class="btn" type="submit">Send</button>
                                                   </div>
                                               </div>
                                           </form>
@@ -95,12 +100,16 @@
                           </li>
                       </ul>
                       <ul class="nav nav-pills nav-stacked labels-info inbox-divider">
-                          <li> <a href="#"> <i class=" fa fa-sign-blank text-danger"></i>  </a> </li>
-                          <li> <a href="#"> <i class=" fa fa-sign-blank text-success"></i>  </a> </li>
-                          <li> <a href="#"> <i class=" fa fa-sign-blank text-info "></i>  </a>
-                          </li><li> <a href="#"> <i class=" fa fa-sign-blank text-warning "></i>  </a>
-                          </li><li> <a href="#"> <i class=" fa fa-sign-blank text-primary "></i>  </a>
-                          </li>
+                          <li><a href="javascript:displayContacts();" id = "contact"><span class="fa fa-address-book-o pull-left" style="font-size:20px"></span>Contacts</a></li>
+                          
+                         <li> <div class="form-group">
+                                   
+                                    <div class="col-lg-10">
+                                             <input type="text" placeholder="Enter email" id="g_contact" class="form-control"></br>
+					     <input type="submit" class="btn btn-primary" value="Add to contacts" id="submit_contact" class="form-control" onclick="checkContact()">
+                                   </div>
+                             </div>
+			</li>
                       </ul>
 
                       <div class="inbox-body text-center">
@@ -127,8 +136,8 @@
                           <h3 id = "heading"></h3>
                           <form action="#" class="pull-right position">
                               <div class="input-append">
-                                  <input type="text" class="sr-input" placeholder="Search Mail">
-                                  <button class="btn sr-btn" type="button"><i class="fa fa-search"></i></button>
+                                  <input type="text" class="sr-input" id="search-mail" placeholder="Search Mail">
+                                  <button class="btn sr-btn" type="button" onclick="searchMail()"><i class="fa fa-search"></i></button>
                               </div>
                           </form>
                       </div>
@@ -189,6 +198,12 @@
                              </ul>
                          </div>
                           <table id = "table" class="table table-inbox table-hover">
+                           <!-- <tbody>
+                              <!--<tr data-toggle="modal" data-target="#myModal1" onclick="getMessage()" id = "row1" class="unread">
+                                </tr>
+
+				
+                          </tbody>-->
                           </table>
 				<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal1" class="modal fade">
                               <div class="modal-dialog">
@@ -212,6 +227,7 @@
 					      <div class="modal-footer">
        						 <button class="btn"  data-dismiss="modal" id="rel" onclick="reply()" aria-hidden="true">Reply</button>
 						<button class="btn" data-dismiss="modal" onclick="forward()" aria-hidden="true">Forward</button>
+						<button class="btn" data-dismiss="modal" onclick="deleteMail()" aria-hidden="true">Delete</button>						
     						</div>
 						
                                           </form>
@@ -224,4 +240,4 @@
               </div>
 </div>
 </body>
-</html
+</html>
