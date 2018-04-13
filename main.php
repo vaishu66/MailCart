@@ -208,7 +208,12 @@
                                                   <div class="col-lg-10">
                                                       <textarea rows="10" cols="30" onclick="this.focus();this.select()" class="form-control" id="body" name="msg" readonly></textarea>
                                                   </div>
-                                              </div>						
+                                              </div>
+					      <div class="modal-footer">
+       						 <button class="btn"  data-dismiss="modal" id="rel" onclick="reply()" aria-hidden="true">Reply</button>
+						<button class="btn" data-dismiss="modal" onclick="forward()" aria-hidden="true">Forward</button>
+    						</div>
+						
                                           </form>
                                       </div>
                                   </div>
