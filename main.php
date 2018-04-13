@@ -8,6 +8,7 @@
 
 <link rel = "stylesheet" type = "text/css" href = "main.css">
 </head>
+<?php session_start();?>
 <body onload = "inbox();">
 <div class="container">
 <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
@@ -18,9 +19,9 @@
                               <span class="glyphicon glyphicon-user pull-right"></span>
                           </a>
                           <div class="user-name">
-                              <h5 id = "user_name"></h5>
-                              <span id="curr_user"></span>
-			     <h5><a href="#">Logout</a></h5>
+                              <h5 id = "user_name"><?php echo $_SESSION['user_name']; ?></h5>
+                              <span id="curr_user"><?php echo $_SESSION['user']; ?></span>
+			     <h5><a href="login.php" onclick="logout();">Logout</a></h5>
                           </div>
                           
                       </div>
@@ -188,12 +189,6 @@
                              </ul>
                          </div>
                           <table id = "table" class="table table-inbox table-hover">
-                           <!-- <tbody>
-                              <!--<tr data-toggle="modal" data-target="#myModal1" onclick="getMessage()" id = "row1" class="unread">
-                                </tr>
-
-				
-                          </tbody>-->
                           </table>
 				<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal1" class="modal fade">
                               <div class="modal-dialog">
