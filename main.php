@@ -67,7 +67,7 @@
                                                   <div class="col-lg-offset-2 col-lg-10">
                                                       <span class="btn green fileinput-button">
                                                         <i class="fa fa-plus fa fa-white"></i>
-                                                      <button class="btn" type="submit">Send</button>
+                                                      <button class="btn" type="submit" onclick="send()">Send</button>
                                                   </div>
                                               </div>
                                           </form>
@@ -188,6 +188,12 @@
                              </ul>
                          </div>
                           <table id = "table" class="table table-inbox table-hover">
+                           <!-- <tbody>
+                              <!--<tr data-toggle="modal" data-target="#myModal1" onclick="getMessage()" id = "row1" class="unread">
+                                </tr>
+
+				
+                          </tbody>-->
                           </table>
 				<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal1" class="modal fade">
                               <div class="modal-dialog">
