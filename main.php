@@ -40,7 +40,7 @@
                                           <h4 class="modal-title">Compose</h4>
                                       </div>
                                       <div class="modal-body">
-                                          <form role="form"  class="form-horizontal">
+                                          <form role="form" action="uploads.php" name = "compose"  method="POST" enctype="multipart/form-data" class="form-horizontal">
                                               <div class="form-group">
                                                   <label class="col-lg-2 control-label">To</label>
                                                   <div class="col-lg-10">
@@ -71,7 +71,7 @@
                                                       <span class="btn green fileinput-button">
                                                         <i class="fa fa-plus fa fa-white"></i>
                                                         <span>Attachment</span>
-                                                       
+                                                       <input type="file" name="fileToUpload" id="fileToUpload">
                                                       </span>
                                                       <button class="btn" type="submit">Send</button>
                                                   </div>
@@ -225,6 +225,7 @@
                                                   </div>
                                               </div>
 					      <div class="modal-footer">
+						<a href="download.php" id = "down">Download file</a>
        						 <button class="btn"  data-dismiss="modal" id="rel" onclick="reply()" aria-hidden="true">Reply</button>
 						<button class="btn" data-dismiss="modal" onclick="forward()" aria-hidden="true">Forward</button>
 						<button class="btn" data-dismiss="modal" onclick="deleteMail()" aria-hidden="true">Delete</button>						
